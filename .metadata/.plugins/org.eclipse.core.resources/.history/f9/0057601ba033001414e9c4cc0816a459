@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class TupleDesc implements Serializable {
 
-	private TDItem[] fields;
+	public TDItem[] fields;
     /**
      * A help class to facilitate organizing the information of each field
      */
@@ -49,7 +49,7 @@ public class TupleDesc implements Serializable {
      */
     public TupleDesc(Type[] typeAr, String[] fieldAr) {
         this.fields = new TDItem[typeAr.length];
-        for(int i = 0; i < this.fields.length; i++){
+        for(int i = 0; i++; i<typeAr.length){
         	fields[i] = new TDItem(typeAr[i], fieldAr[i]);
         }
     }
@@ -121,11 +121,8 @@ public class TupleDesc implements Serializable {
      * Note that tuples from a given TupleDesc are of a fixed size.
      */
     public int getSize() {
-    	int sum = 0;
-        for(int i = 0; i < this.fields.length; i++){
-        	sum += this.fields[i].fieldType.getLen();
-        }
-        return sum;
+        // some code goes here
+        return 0;
     }
 
     /**
@@ -137,18 +134,7 @@ public class TupleDesc implements Serializable {
      * @return the new TupleDesc
      */
     public static TupleDesc merge(TupleDesc td1, TupleDesc td2) {
-        int len = td1.numFields() + td2.numFields();
-        Type[] typeAr = new Type[len];
-		String[] fieldAr = new String[len];
-		for(int i = 0; i < td1.numFields(); i++){
-			typeAr[i] = td1.fields[i].fieldType;
-			fieldAr[i] = td1.fields[i].fieldName;
-		}
-		for(int i = td1.numFields(); i < len; i++){
-			typeAr[i] = td2.fields[i - td1.numFields()].fieldType;
-			fieldAr[i] = td2.fields[i - td1.numFields()].fieldName;
-		}
-        
+        // some code goes here
         return null;
     }
 
