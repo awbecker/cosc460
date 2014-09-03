@@ -47,7 +47,10 @@ public class TupleDesc implements Serializable {
      *                be null.
      */
     public TupleDesc(Type[] typeAr, String[] fieldAr) {
-        // some code goes here
+        public TDItem[] fields = new TDItem[typeAr.length];
+        for(int i = 0; i++; i<typeAr.length){
+        	fields[i] = new TDItem(typeAr[i], fieldAr[i]);
+        }
     }
 
     /**
@@ -58,7 +61,7 @@ public class TupleDesc implements Serializable {
      *               TupleDesc. It must contain at least one entry.
      */
     public TupleDesc(Type[] typeAr) {
-        // some code goes here
+        
     }
 
     /**
