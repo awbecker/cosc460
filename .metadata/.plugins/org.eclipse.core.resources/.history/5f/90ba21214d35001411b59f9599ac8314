@@ -31,6 +31,7 @@ public class BufferPool {
     
     private int numpages;
     private List<Page> pages;
+    private Catalog catalog = Database.getCatalog();
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -38,7 +39,8 @@ public class BufferPool {
      * @param numPages maximum number of pages in this buffer pool.
      */
     public BufferPool(int numPages) {
-        this.numpages = numPages;      
+        this.numpages = numPages;
+        
     }
 
     public static int getPageSize() {
@@ -73,8 +75,7 @@ public class BufferPool {
         	}
         }
         int tableid = pid.getTableId();
-        Catalog catalog = Database.getCatalog();
-        DbFile dbfile = catalog.getDatabaseFile(tableid);
+        DbFile dbfile = this.catalog.getDatabaseFile(tableid);
         Page page = dbfile.readPage(pid);
         this.pages.add(page);
         if(this.pages.size() > this.numpages){

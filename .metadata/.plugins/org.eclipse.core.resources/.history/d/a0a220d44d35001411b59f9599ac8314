@@ -197,7 +197,7 @@ public class TupleDesc implements Serializable {
     public String toString() {
         String str = this.fields[1].toString();
         for(int i = 1; i < this.fields.length; i++){
-        	str = str + ", " + this.fields[i].toString();
+        	str = str + "," + this.fields[i].toString();
         }
         return str;
     }
