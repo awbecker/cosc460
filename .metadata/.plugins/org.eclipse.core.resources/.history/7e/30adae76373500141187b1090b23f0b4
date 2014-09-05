@@ -1,7 +1,8 @@
 package simpledb;
 
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * BufferPool manages the reading and writing of pages into memory from
@@ -28,10 +29,6 @@ public class BufferPool {
      * constructor instead.
      */
     public static final int DEFAULT_PAGES = 50;
-    
-    private int numpages;
-    private List<Page> pages;
-    private Catalog catalog;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -39,8 +36,7 @@ public class BufferPool {
      * @param numPages maximum number of pages in this buffer pool.
      */
     public BufferPool(int numPages) {
-        this.numpages = numPages;
-        this.catalog = Database.getCatalog();
+        // some code goes here
     }
 
     public static int getPageSize() {
@@ -60,7 +56,7 @@ public class BufferPool {
      * The retrieved page should be looked up in the buffer pool.  If it
      * is present, it should be returned.  If it is not present, it should
      * be added to the buffer pool and returned.  If there is insufficient
-     * space in the buffer pool, n page should be evicted and the new page
+     * space in the buffer pool, an page should be evicted and the new page
      * should be added in its place.
      *
      * @param tid  the ID of the transaction requesting the page
@@ -69,19 +65,8 @@ public class BufferPool {
      */
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
-        for(Page page : this.pages){
-        	if(page.getId().equals(pid)){
-        		return page;
-        	}
-        }
-        int tableid = pid.getTableId();
-        DbFile dbfile = catalog.getDatabaseFile(tableid);
-        Page page = dbfile.readPage(pid);
-        this.pages.add(page);
-        if(this.pages.size() > this.numpages){
-        	this.pages.remove(0);
-        }
-        return page;
+        // some code goes here
+        return null;
     }
 
     /**

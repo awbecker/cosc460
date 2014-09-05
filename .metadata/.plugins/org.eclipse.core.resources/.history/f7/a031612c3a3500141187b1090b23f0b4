@@ -31,7 +31,6 @@ public class BufferPool {
     
     private int numpages;
     private List<Page> pages;
-    private Catalog catalog;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -40,7 +39,6 @@ public class BufferPool {
      */
     public BufferPool(int numPages) {
         this.numpages = numPages;
-        this.catalog = Database.getCatalog();
     }
 
     public static int getPageSize() {
@@ -74,14 +72,7 @@ public class BufferPool {
         		return page;
         	}
         }
-        int tableid = pid.getTableId();
-        DbFile dbfile = catalog.getDatabaseFile(tableid);
-        Page page = dbfile.readPage(pid);
-        this.pages.add(page);
-        if(this.pages.size() > this.numpages){
-        	this.pages.remove(0);
-        }
-        return page;
+        int tableid = pid.getTableId()
     }
 
     /**
