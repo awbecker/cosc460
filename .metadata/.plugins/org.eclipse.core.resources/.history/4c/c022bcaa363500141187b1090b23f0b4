@@ -27,7 +27,6 @@ public class Catalog {
 	
     public Catalog() {
         this.tables = new ArrayList<Table>();
-        this.tableids = new ArrayList<Integer>();
     }
     
     public class Table{

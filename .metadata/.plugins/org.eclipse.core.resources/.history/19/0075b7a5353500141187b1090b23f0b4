@@ -23,11 +23,9 @@ public class Catalog {
      * Creates a new, empty catalog.
      */
 	private List<Table> tables;
-	private List<Integer> tableids;
 	
     public Catalog() {
         this.tables = new ArrayList<Table>();
-        this.tableids = new ArrayList<Integer>();
     }
     
     public class Table{
@@ -67,7 +65,6 @@ public class Catalog {
     public void addTable(DbFile file, String name, String pkeyField) {
         Table table = new Table(file, name, pkeyField);
         this.tables.add(table);
-        this.tableids.add(file.getId());
     }
 
     public void addTable(DbFile file, String name) {
@@ -138,19 +135,15 @@ public class Catalog {
         		return table.getPkey();
         	}
         }
-    	return "";
     }
 
     public Iterator<Integer> tableIdIterator() {
-        return this.tableids.iterator();
+        // some code goes here
+        return null;
     }
 
     public String getTableName(int id) {
-    	for(Table table : this.tables){
-        	if(table.getFile().getId() == id){
-        		return table.getName();
-        	}
-        }
+        // some code goes here
         return null;
     }
 
@@ -158,9 +151,7 @@ public class Catalog {
      * Delete all tables from the catalog
      */
     public void clear() {
-    	for(Table table : this.tables){
-        	this.tables.remove(table);
-        }
+        // some code goes here
     }
 
     /**

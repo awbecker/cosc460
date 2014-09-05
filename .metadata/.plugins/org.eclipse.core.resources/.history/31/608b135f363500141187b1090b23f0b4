@@ -27,7 +27,6 @@ public class Catalog {
 	
     public Catalog() {
         this.tables = new ArrayList<Table>();
-        this.tableids = new ArrayList<Integer>();
     }
     
     public class Table{
@@ -142,15 +141,12 @@ public class Catalog {
     }
 
     public Iterator<Integer> tableIdIterator() {
-        return this.tableids.iterator();
+        // some code goes here
+        return null;
     }
 
     public String getTableName(int id) {
-    	for(Table table : this.tables){
-        	if(table.getFile().getId() == id){
-        		return table.getName();
-        	}
-        }
+        // some code goes here
         return null;
     }
 
