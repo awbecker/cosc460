@@ -324,7 +324,7 @@ public class HeapPage implements Page {
     		curindex = 0;
     	}
     	public boolean hasNext() {
-            return curIdx < myData.length;
+            return currIdx < myData.length;
         }
     	
     	public Tuple next(){

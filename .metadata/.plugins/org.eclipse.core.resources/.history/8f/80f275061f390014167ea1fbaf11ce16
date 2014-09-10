@@ -321,10 +321,10 @@ public class HeapPage implements Page {
     	private int curindex;
     	
     	public myIterator(){
-    		curindex = 0;
+    		this.curindex = 0;
     	}
     	public boolean hasNext() {
-            return curIdx < myData.length;
+            return currIdx < myData.length;
         }
     	
     	public Tuple next(){

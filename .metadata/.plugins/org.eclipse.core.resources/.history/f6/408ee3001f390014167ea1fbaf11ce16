@@ -318,19 +318,6 @@ public class HeapPage implements Page {
      */
     
     public class myIterator implements Iterator{
-    	private int curindex;
-    	
-    	public myIterator(){
-    		curindex = 0;
-    	}
-    	public boolean hasNext() {
-            return curIdx < myData.length;
-        }
-    	
-    	public Tuple next(){
-    		
-    	}
-    	
     	public void remove() {
             throw new UnsupportedOperationException("nope.");
         }

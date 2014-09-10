@@ -68,8 +68,7 @@ public class HeapPage implements Page {
      * @return the number of tuples on this page
      */
     private int getNumTuples() {
-    	Double numtuples = Math.floor((BufferPool.getPageSize() * 8) / (this.td.getSize() * 8 + 1));
-        return numtuples.intValue();
+        return this.tuples.length;
 
     }
 
@@ -79,8 +78,7 @@ public class HeapPage implements Page {
      * @return the number of bytes in the header of a page in a HeapFile with each tuple occupying tupleSize bytes
      */
     private int getHeaderSize() {
-    	Double headsize = Math.ceil(this.getNumTuples()/8);
-    	return headsize.intValue();
+    	return Math.ceil(this.getNumTuples()/8).IntValue();
     }
 
     /**
@@ -283,25 +281,16 @@ public class HeapPage implements Page {
      * Returns the number of empty slots on this page.
      */
     public int getNumEmptySlots() {
-    	int empty = 0;
-        for(int i = 0; i < this.getNumTuples(); i++){
-        	if(! this.isSlotUsed(i)){
-        		empty ++;
-        	}
-        }
-        return empty;
+        // some code goes here
+        return 0;
     }
 
     /**
      * Returns true if associated slot on this page is filled.
      */
     public boolean isSlotUsed(int i) {
-        byte slot = header[i/8];
-        int place = 1 << i%8;
-        if((slot & place) == 0){
-        	return false;
-        }
-        else return true;
+        // some code goes here
+        return false;
     }
 
     /**
@@ -316,26 +305,6 @@ public class HeapPage implements Page {
      * @return an iterator over all tuples on this page (calling remove on this iterator throws an UnsupportedOperationException)
      * (note that this iterator shouldn't return tuples in empty slots!)
      */
-    
-    public class myIterator implements Iterator{
-    	private int curindex;
-    	
-    	public myIterator(){
-    		curindex = 0;
-    	}
-    	public boolean hasNext() {
-            return curIdx < myData.length;
-        }
-    	
-    	public Tuple next(){
-    		
-    	}
-    	
-    	public void remove() {
-            throw new UnsupportedOperationException("nope.");
-        }
-    }
-    
     public Iterator<Tuple> iterator() {
         // some code goes here
         return null;

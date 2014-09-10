@@ -316,26 +316,6 @@ public class HeapPage implements Page {
      * @return an iterator over all tuples on this page (calling remove on this iterator throws an UnsupportedOperationException)
      * (note that this iterator shouldn't return tuples in empty slots!)
      */
-    
-    public class myIterator implements Iterator{
-    	private int curindex;
-    	
-    	public myIterator(){
-    		curindex = 0;
-    	}
-    	public boolean hasNext() {
-            return curIdx < myData.length;
-        }
-    	
-    	public Tuple next(){
-    		
-    	}
-    	
-    	public void remove() {
-            throw new UnsupportedOperationException("nope.");
-        }
-    }
-    
     public Iterator<Tuple> iterator() {
         // some code goes here
         return null;

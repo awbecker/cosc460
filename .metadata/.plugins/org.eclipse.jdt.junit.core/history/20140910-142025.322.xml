@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="HeapPageIdTest" project="mysimpledb" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="simpledb.HeapPageIdTest" time="0.0">
+    <testcase name="equals" classname="simpledb.HeapPageIdTest" time="0.0"/>
+    <testcase name="getTableId" classname="simpledb.HeapPageIdTest" time="0.0"/>
+    <testcase name="pageno" classname="simpledb.HeapPageIdTest" time="0.0"/>
+    <testcase name="testHashCode" classname="simpledb.HeapPageIdTest" time="0.0"/>
+  </testsuite>
+</testrun>

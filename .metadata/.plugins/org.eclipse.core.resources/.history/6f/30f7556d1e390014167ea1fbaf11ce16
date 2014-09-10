@@ -296,8 +296,10 @@ public class HeapPage implements Page {
      * Returns true if associated slot on this page is filled.
      */
     public boolean isSlotUsed(int i) {
-        byte slot = header[i/8];
-        int place = 1 << i%8;
+        int byt = i/8;
+        byte slot = header[byt];
+        int bit = i%8;
+        int place = 1 << bit;
         if((slot & place) == 0){
         	return false;
         }
@@ -316,26 +318,6 @@ public class HeapPage implements Page {
      * @return an iterator over all tuples on this page (calling remove on this iterator throws an UnsupportedOperationException)
      * (note that this iterator shouldn't return tuples in empty slots!)
      */
-    
-    public class myIterator implements Iterator{
-    	private int curindex;
-    	
-    	public myIterator(){
-    		curindex = 0;
-    	}
-    	public boolean hasNext() {
-            return curIdx < myData.length;
-        }
-    	
-    	public Tuple next(){
-    		
-    	}
-    	
-    	public void remove() {
-            throw new UnsupportedOperationException("nope.");
-        }
-    }
-    
     public Iterator<Tuple> iterator() {
         // some code goes here
         return null;
