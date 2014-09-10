@@ -70,7 +70,7 @@ public class RecordId implements Serializable {
     public int hashCode() {
         String pidhash = Integer.toString(this.getPageId().hashCode());
         String tpnohash = Integer.toString(this.tupleno());
-        return (pidhash + "/" + tpnohash).hashCode();
+        throw new UnsupportedOperationException("implement this");
 
     }
 

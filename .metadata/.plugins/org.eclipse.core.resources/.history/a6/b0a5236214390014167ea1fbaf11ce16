@@ -43,8 +43,8 @@ public class HeapPageId implements PageId {
      * @see BufferPool
      */
     public int hashCode() {
-        String hash = Integer.toString(this.getTableId()) + "/" + Integer.toString(this.pageNumber());
-        return hash.hashCode();
+        // some code goes here
+        throw new UnsupportedOperationException("implement this");
     }
 
     /**

@@ -52,7 +52,7 @@ public class RecordId implements Serializable {
         	return false;
         }
         RecordId rid = (RecordId)o;
-        if(rid.getPageId().equals(this.getPageId()) && rid.tupleno() == this.tupleno()){
+        if(rid.getPageId().equals(this.getPageId() && rid.tupleno() == this.tupleno())){
         	return true;
         }
         else{
@@ -68,9 +68,8 @@ public class RecordId implements Serializable {
      */
     @Override
     public int hashCode() {
-        String pidhash = Integer.toString(this.getPageId().hashCode());
-        String tpnohash = Integer.toString(this.tupleno());
-        return (pidhash + "/" + tpnohash).hashCode();
+        // some code goes here
+        throw new UnsupportedOperationException("implement this");
 
     }
 
