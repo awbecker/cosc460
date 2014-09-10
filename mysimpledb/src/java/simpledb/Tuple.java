@@ -59,10 +59,14 @@ public class Tuple implements Serializable {
      * @param f new value for the field.
      */
     public void setField(int i, Field f) {
-    	if(i >= 0 && i < this.tfields.length){
-    		if(this.tdsc.getFieldType(i).equals(f.getType())){
-    			this.tfields[i] = f;
-    		}
+    	String str1 = f.getType().toString();
+    	String str2 = this.tdsc.getFieldType(i).toString();
+    	//System.out.println(str1 + " " + str2 + " " + str1.equals(str2));
+    	if(i >= 0 && i < this.tfields.length && str1.equals(str2)){
+    		this.tfields[i] = f;
+    	}
+    	else{
+    		throw new RuntimeException();
     	}
     }
 
