@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="RecordIdTest" project="mysimpledb" tests="4" started="4" failures="0" errors="0" ignored="0">
-  <testsuite name="simpledb.RecordIdTest" time="0.008">
-    <testcase name="equals" classname="simpledb.RecordIdTest" time="0.002"/>
-    <testcase name="getPageId" classname="simpledb.RecordIdTest" time="0.0"/>
-    <testcase name="tupleno" classname="simpledb.RecordIdTest" time="0.001"/>
-    <testcase name="hCode" classname="simpledb.RecordIdTest" time="0.005"/>
-  </testsuite>
-</testrun>

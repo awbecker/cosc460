@@ -317,18 +317,39 @@ public class HeapPage implements Page {
      * (note that this iterator shouldn't return tuples in empty slots!)
      */
     
-    public class myIterator implements Iterator{
+    public class myIterator implements Iterator<Tuple>{
     	private int curindex;
+    	private Tuple next = null;
     	
     	public myIterator(){
     		curindex = 0;
+    		next = null;
     	}
+    	
     	public boolean hasNext() {
-            return curIdx < myData.length;
+    		if (next == null) {
+                fetchNext();
+            }
+            return next != null;
         }
     	
+    	public void fetchNext(){
+    		while (curindex < tuples.length && ! isSlotUsed(curindex)) {
+                curindex++;
+            }
+    		if(curindex < tuples.length){
+    			next = tuples[curindex];
+    			curindex++;
+    		}
+    	}
+    	
     	public Tuple next(){
-    		
+    		if (!hasNext()) {
+                throw new NoSuchElementException("no more.");
+            }
+            Tuple tup = next;
+            next = null;                
+            return tup;
     	}
     	
     	public void remove() {
@@ -337,8 +358,7 @@ public class HeapPage implements Page {
     }
     
     public Iterator<Tuple> iterator() {
-        // some code goes here
-        return null;
+        return new myIterator();
     }
 
 }

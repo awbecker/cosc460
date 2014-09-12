@@ -21,8 +21,13 @@ public class HeapFile implements DbFile {
      * @param f the file that stores the on-disk backing store for this heap
      *          file.
      */
+	
+	private File f = null;
+	private TupleDesc tdsc = null;
+	
     public HeapFile(File f, TupleDesc td) {
-        // some code goes here
+        this.f = f;
+        this.tdsc = td;
     }
 
     /**
@@ -31,8 +36,7 @@ public class HeapFile implements DbFile {
      * @return the File backing this HeapFile on disk.
      */
     public File getFile() {
-        // some code goes here
-        return null;
+        return this.f;
     }
 
     /**
@@ -45,8 +49,7 @@ public class HeapFile implements DbFile {
      * @return an ID uniquely identifying this HeapFile.
      */
     public int getId() {
-        // some code goes here
-        throw new UnsupportedOperationException("implement this");
+        return f.getAbsoluteFile().hashCode();
     }
 
     /**
@@ -55,13 +58,21 @@ public class HeapFile implements DbFile {
      * @return TupleDesc of this DbFile.
      */
     public TupleDesc getTupleDesc() {
-        // some code goes here
-        throw new UnsupportedOperationException("implement this");
+        return this.tdsc;
     }
 
     // see DbFile.java for javadocs
     public Page readPage(PageId pid) {
-        // some code goes here
+
+        try{
+        	InputStream input = new FileInputStream(getFile());
+        	int pgno = pid.pageNumber();
+        	input.skip(BufferPool.PAGE_SIZE * pgno);
+        	byte[] buffer = new byte[BufferPool.PAGE_SIZE];
+        	input.read(buffer, 0, BufferPool.PAGE_SIZE);
+        	input.close();
+        	return new HeapPage((HeapPageId)pid, buffer);
+        } catch (Exception e) {}
         return null;
     }
 
@@ -75,8 +86,18 @@ public class HeapFile implements DbFile {
      * Returns the number of pages in this HeapFile.
      */
     public int numPages() {
-        // some code goes here
-        return 0;
+    	try{
+    		InputStream input = new FileInputStream(getFile());
+    		int data = input.read();
+    		int count = 1;
+    		while(data != -1){
+    			data = input.read();
+    			count++;
+    		}
+    		input.close();
+    		return count/BufferPool.PAGE_SIZE;
+    	} catch (Exception e) {}
+    	return 0;
     }
 
     // see DbFile.java for javadocs
@@ -94,11 +115,80 @@ public class HeapFile implements DbFile {
         return null;
         // not necessary for lab1
     }
-
+    
+    public class myIterator implements DbFileIterator{
+    	private int tableid;
+    	private int curpage;
+    	private Tuple next = null;
+    	TransactionId tid;
+    	Iterator<Tuple> pageit = null;
+    	
+    	public myIterator(TransactionId tid){
+    		this.tid = tid;
+    		this.tableid = getId();
+    		curpage = 0;
+    		next = null;
+    	}
+    	
+    	public boolean hasNext() {
+    		if (next == null) {
+                fetchNext();
+            }
+            return next != null;
+        }
+    	
+    	public void fetchNext(){
+    		try{
+	    		if (pageit == null){
+	    			
+	    			BufferPool bp = Database.getBufferPool();
+	    			HeapPage page = (HeapPage) bp.getPage(this.tid, new HeapPageId(this.tableid, this.curpage), Permissions.READ_WRITE);
+	    			System.out.println(page == null); //not reaching this point?
+	    			pageit = page.iterator();
+	    			
+	    			curpage++;
+	    			next = pageit.next();
+	    		}
+	    		else if(! pageit.hasNext()){
+	    			pageit = null;
+	    			fetchNext();
+	    		}
+	    		else{
+	    			next = pageit.next();
+	    		}
+    		} catch (TransactionAbortedException e) {System.err.println(e.getMessage());} catch (DbException e) {System.err.println(e.getMessage());}
+    	}
+    	
+    	public Tuple next(){
+    		if (!hasNext()) {
+                throw new NoSuchElementException("no more.");
+            }
+            Tuple tup = next;
+            next = null;                
+            return tup;
+    	}
+    	
+    	public void rewind(){
+    		curpage = 0;
+    		next = null;
+    	}
+    	
+    	public void open(){
+    		//not sure what exactly this is meant for
+    	}
+    	
+    	public void close(){
+    		//not sure what exactly this is meant for
+    	}
+    	
+    	public void remove() {
+            throw new UnsupportedOperationException("nope.");
+        }
+    }
+    
     // see DbFile.java for javadocs
     public DbFileIterator iterator(TransactionId tid) {
-        // some code goes here
-        return null;
+        return new myIterator(tid);
     }
 
 }

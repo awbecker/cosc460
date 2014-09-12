@@ -24,8 +24,15 @@ public class SeqScan implements DbIterator {
      *                   are, but the resulting name can be null.fieldName,
      *                   tableAlias.null, or null.null).
      */
+    
+    private TransactionId tid = null;
+    private int tableid;
+    private String tableAlias = null;
+    
     public SeqScan(TransactionId tid, int tableid, String tableAlias) {
-        // some code goes here
+        tid = tid;
+        tableid = tableid;
+        tableAlias = tableAlias;
     }
 
     /**
@@ -33,16 +40,15 @@ public class SeqScan implements DbIterator {
      * be the actual name of the table in the catalog of the database
      */
     public String getTableName() {
-        // some code goes here
-        return null;
+        Catalog cat = Database.getCatalog();
+        return cat.getTableName(tableid);
     }
 
     /**
      * @return Return the alias of the table this operator scans.
      */
     public String getAlias() {
-        // some code goes here
-        return null;
+        return tableAlias;
     }
 
     public SeqScan(TransactionId tid, int tableid) {
@@ -63,8 +69,8 @@ public class SeqScan implements DbIterator {
      * prefixed with the tableAlias string from the constructor.
      */
     public TupleDesc getTupleDesc() {
-        // some code goes here
-        return null;
+    	Catalog cat = Database.getCatalog();
+        return cat.getTupleDesc(tableid);
     }
 
     public boolean hasNext() throws TransactionAbortedException, DbException {

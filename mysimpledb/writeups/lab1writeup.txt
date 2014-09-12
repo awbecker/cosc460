@@ -5,21 +5,23 @@ After you complete lab 1, please answer the following questions.  For lab 1, the
 
 1. What is your name?  If you work with a partner, be sure to write both of your names.
 
-<Replace this text with your answer>
+Adam Becker
 
 2. What did you think of this assignment?
 
-<Replace this text with your answer>
+I think that the idea of building our own database is great, but I have been frustrated with getting some of the parts to work correctly.
 
 3. What was the hardest part of this assignment?
 
-<Replace this text with your answer>
+The HeapFile Iterator.
 
 4. Describe any missing or incomplete elements of your code.
 
-<Replace this text with your answer>
+There's something going wrong with my HeapFile iterator that I can't figure out, there seems to be a problem when I call getPage with my BufferPool.
+When I try to debug with excercise 7 as suggested, I run this line java -classpath dist/simpledb.jar simpledb.Lab1Main and nothing happens. I'm not really sure what's going on...
+I've also implemented some of the basic methods in SeqScan but don't know what to do with open or close.
 
 5. Roughly how long did you spend working on this lab?
 
-<Replace this text with your answer>
+~10-12 hours?
 
