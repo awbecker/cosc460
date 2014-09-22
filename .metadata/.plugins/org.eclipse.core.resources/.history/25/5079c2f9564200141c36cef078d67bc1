@@ -132,9 +132,6 @@ public class HeapFile implements DbFile {
     	}
     	
     	public boolean hasNext() {
-    		if(!open){
-    			return false;
-    		}
     		if (next == null) {
                 fetchNext();
             }
