@@ -28,11 +28,12 @@ public class SeqScan implements DbIterator {
     private TransactionId tid = null;
     private int tableid;
     private String tableAlias = null;
+    private boolean open = false;
     
     public SeqScan(TransactionId tid, int tableid, String tableAlias) {
-        tid = tid;
-        tableid = tableid;
-        tableAlias = tableAlias;
+        this.tid = tid;
+        this.tableid = tableid;
+        this.tableAlias = tableAlias;
     }
 
     /**
@@ -56,7 +57,7 @@ public class SeqScan implements DbIterator {
     }
 
     public void open() throws DbException, TransactionAbortedException {
-        // some code goes here
+        open = true;
     }
 
     /**
@@ -85,7 +86,7 @@ public class SeqScan implements DbIterator {
     }
 
     public void close() {
-        // some code goes here
+        open = false;
     }
 
     public void rewind() throws DbException, NoSuchElementException,

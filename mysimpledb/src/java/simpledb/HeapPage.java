@@ -68,8 +68,7 @@ public class HeapPage implements Page {
      * @return the number of tuples on this page
      */
     private int getNumTuples() {
-    	Double numtuples = Math.floor((BufferPool.getPageSize() * 8) / (this.td.getSize() * 8 + 1));
-        return numtuples.intValue();
+    	return (BufferPool.getPageSize() * 8) / (this.td.getSize() * 8 + 1);
 
     }
 
@@ -79,7 +78,7 @@ public class HeapPage implements Page {
      * @return the number of bytes in the header of a page in a HeapFile with each tuple occupying tupleSize bytes
      */
     private int getHeaderSize() {
-    	Double headsize = Math.ceil(this.getNumTuples()/8);
+    	Double headsize = Math.ceil(this.getNumTuples()/8.0);
     	return headsize.intValue();
     }
 
@@ -343,9 +342,9 @@ public class HeapPage implements Page {
     		}
     	}
     	
-    	public Tuple next(){
+    	public Tuple next() throws NoSuchElementException{
     		if (!hasNext()) {
-                throw new NoSuchElementException("no more.");
+                throw new NoSuchElementException("does not have next");
             }
             Tuple tup = next;
             next = null;                
@@ -353,7 +352,7 @@ public class HeapPage implements Page {
     	}
     	
     	public void remove() {
-            throw new UnsupportedOperationException("nope.");
+            throw new UnsupportedOperationException("not implemented");
         }
     }
     
