@@ -269,6 +269,7 @@ public class HeapPage implements Page {
     public void insertTuple(Tuple t) throws DbException {
     	//System.out.println(getNumEmptySlots());
         int i = 0;
+        System.out.println(isSlotUsed(0));
         while(isSlotUsed(i)){
         	i++;
         	if(i >= header.length*8){
@@ -344,7 +345,7 @@ public class HeapPage implements Page {
         	header[i/8] = (byte)(slot & ~place);
         }
         //System.out.println(value + " " + isSlotUsed(i));
-        System.out.println(getNumEmptySlots());
+        //System.out.println(getNumEmptySlots());
     }
 
     /**

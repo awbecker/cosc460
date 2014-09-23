@@ -269,7 +269,7 @@ public class HeapPage implements Page {
     public void insertTuple(Tuple t) throws DbException {
     	//System.out.println(getNumEmptySlots());
         int i = 0;
-        while(isSlotUsed(i)){
+        while(!isSlotUsed(i)){
         	i++;
         	if(i >= header.length*8){
         		throw new DbException("no empty slots");
@@ -334,10 +334,11 @@ public class HeapPage implements Page {
      * Abstraction to fill or clear a slot on this page.
      */
     private void markSlotUsed(int i, boolean value) {
-    	System.out.println(isSlotUsed(i));
+    	System.out.println(i);
     	byte slot = header[i/8];
         int place = 1 << i%8;
         if(value){
+        	System.out.println(-1 ^ 1);
         	header[i/8] = (byte)(slot | place);
         }
         else{
