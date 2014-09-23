@@ -177,6 +177,7 @@ public class HeapFile implements DbFile {
     	public void rewind(){
     		curpage = 0;
     		next = null;
+    		pageit = null;
     	}
     	
     	public void open(){

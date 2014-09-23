@@ -1,6 +1,6 @@
 package simpledb;
-
 import java.util.*;
+
 
 /**
  * SeqScan is an implementation of a sequential scan access method that reads
@@ -28,12 +28,15 @@ public class SeqScan implements DbIterator {
     private TransactionId tid = null;
     private int tableid;
     private String tableAlias = null;
-    private boolean open = false;
+    private DbFileIterator iter = null;
     
     public SeqScan(TransactionId tid, int tableid, String tableAlias) {
         this.tid = tid;
         this.tableid = tableid;
         this.tableAlias = tableAlias;
+        Catalog cat = Database.getCatalog();
+        DbFile f = cat.getDatabaseFile(tableid);
+        this.iter = f.iterator(tid);
     }
 
     /**
@@ -57,7 +60,7 @@ public class SeqScan implements DbIterator {
     }
 
     public void open() throws DbException, TransactionAbortedException {
-        open = true;
+        iter.open();
     }
 
     /**
@@ -71,26 +74,31 @@ public class SeqScan implements DbIterator {
      */
     public TupleDesc getTupleDesc() {
     	Catalog cat = Database.getCatalog();
-        return cat.getTupleDesc(tableid);
+        TupleDesc tdsc = cat.getTupleDesc(tableid);
+        String[] newtdscf = new String[tdsc.numFields()];
+        Type[] newtdsct = new Type[tdsc.numFields()];
+        for(int i = 0; i < tdsc.numFields(); i++){
+        	newtdscf[i] = tableAlias + "." + tdsc.getFieldName(i);
+        	newtdsct[i] = tdsc.getFieldType(i);
+        }
+        return new TupleDesc(newtdsct, newtdscf);
     }
 
     public boolean hasNext() throws TransactionAbortedException, DbException {
-        // some code goes here
-        return false;
+        return iter.hasNext();
     }
 
     public Tuple next() throws NoSuchElementException,
             TransactionAbortedException, DbException {
-        // some code goes here
-        return null;
+        return iter.next();
     }
 
     public void close() {
-        open = false;
+        iter.close();
     }
 
     public void rewind() throws DbException, NoSuchElementException,
             TransactionAbortedException {
-        // some code goes here
+        iter.rewind();
     }
 }
