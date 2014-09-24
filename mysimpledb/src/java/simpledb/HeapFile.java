@@ -147,11 +147,17 @@ public class HeapFile implements DbFile {
 	    			
 	    			BufferPool bp = Database.getBufferPool();
 	    			HeapPage page = (HeapPage) bp.getPage(this.tid, new HeapPageId(this.tableid, this.curpage), Permissions.READ_WRITE);
-	    			//System.out.println(page == null); //not reaching this point?
 	    			pageit = page.iterator();
-	    			
 	    			curpage++;
-	    			next = pageit.next();
+	    			if(pageit.hasNext()){
+	    				next = pageit.next();
+	    			}
+	    			else{
+	    				pageit = null;
+		    			if(curpage < numPages()){
+		    				fetchNext();
+		    			}
+	    			}
 	    		}
 	    		else if(! pageit.hasNext()){
 	    			pageit = null;

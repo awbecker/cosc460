@@ -1,0 +1,47 @@
+Report for Lab 3
+----------------
+
+Answer the questions from the lab description here.  Questions 8 and 9 do not require answers.
+
+1.	Aggregate, Delete, Filter, HashEquiJoin, Insert, Join, Operator, OrderBy, Project, SeqScan, TupleIterator
+
+2.	Aggregate, Delete, Filter, HashEquiJoin, Insert, Join, OrderBy, Project
+
+3.	HashEquiJoin and Join = join, Project = project, Filter = select, so just join, select, and project. 
+
+4.	Filter is a subclass of Operator, and is therefore not required to implement close, next or hasNext; it will inherit these methods from Operator.
+
+5.	t = current tuple under consideration 	//assume that there was a match before or t is null
+	while(iterR.hasNext()){ 				//if there is another element in the iterator
+		t = iterR.next()
+		if t matches predicate:
+			return t
+	}
+	return null 							//did not find any elements matching the predicate	
+
+6.
+
+7.
+
+After you complete lab 3, please answer the following questions.  
+
+1. What is your name?  If you work with a partner, be sure to write both of your names.
+
+<Replace this text with your answer>
+
+2. What did you think of this assignment?
+
+<Replace this text with your answer>
+
+3. What was the hardest part of this assignment?
+
+<Replace this text with your answer>
+
+4. Describe any missing or incomplete elements of your code.
+
+<Replace this text with your answer>
+
+5. Roughly how long did you spend working on this lab?
+
+<Replace this text with your answer>
+
