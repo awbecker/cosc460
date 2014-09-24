@@ -2,6 +2,7 @@ package simpledb;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * BufferPool manages the reading and writing of pages into memory from
@@ -30,7 +31,7 @@ public class BufferPool {
     public static final int DEFAULT_PAGES = 50;
     
     private int numpages;
-    private List<Page> pages;
+    private List<Page> pages = new ArrayList<Page>();
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -67,15 +68,23 @@ public class BufferPool {
      */
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
-        for(Page page : this.pages){
-        	if(page.getId().equals(pid)){
-        		return page;
-        	}
+        if(! pages.isEmpty()){
+	    	for(Page page : pages){
+	        	if(page.getId().equals(pid)){
+	        		return page;
+	        	}
+	        }
         }
         int tableid = pid.getTableId();
         Catalog catalog = Database.getCatalog();
         DbFile dbfile = catalog.getDatabaseFile(tableid);
+        if(dbfile == null){
+        	throw new DbException("tableid did not return a dbfile");
+        }
         Page page = dbfile.readPage(pid);
+        if(page == null){
+        	throw new DbException("pageid did not return a page");
+        }
         this.pages.add(page);
         if(this.pages.size() > this.numpages){
         	this.pages.remove(0);

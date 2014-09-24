@@ -72,7 +72,7 @@ public class HeapFile implements DbFile {
         	input.read(buffer, 0, BufferPool.PAGE_SIZE);
         	input.close();
         	return new HeapPage((HeapPageId)pid, buffer);
-        } catch (Exception e) {}
+        } catch (FileNotFoundException e) {System.err.println(e.getMessage());} catch (IOException e) {System.err.println(e.getMessage());}
         return null;
     }
 
@@ -96,7 +96,7 @@ public class HeapFile implements DbFile {
     		}
     		input.close();
     		return count/BufferPool.PAGE_SIZE;
-    	} catch (Exception e) {}
+    	} catch (FileNotFoundException e) {System.err.println(e.getMessage());} catch (IOException e) {System.err.println(e.getMessage());}
     	return 0;
     }
 
@@ -120,8 +120,9 @@ public class HeapFile implements DbFile {
     	private int tableid;
     	private int curpage;
     	private Tuple next = null;
-    	TransactionId tid;
-    	Iterator<Tuple> pageit = null;
+    	private TransactionId tid;
+    	private Iterator<Tuple> pageit = null;
+    	private boolean open = false;
     	
     	public myIterator(TransactionId tid){
     		this.tid = tid;
@@ -131,6 +132,9 @@ public class HeapFile implements DbFile {
     	}
     	
     	public boolean hasNext() {
+    		if(!open){
+    			return false;
+    		}
     		if (next == null) {
                 fetchNext();
             }
@@ -139,11 +143,11 @@ public class HeapFile implements DbFile {
     	
     	public void fetchNext(){
     		try{
-	    		if (pageit == null){
+	    		if(pageit == null){
 	    			
 	    			BufferPool bp = Database.getBufferPool();
 	    			HeapPage page = (HeapPage) bp.getPage(this.tid, new HeapPageId(this.tableid, this.curpage), Permissions.READ_WRITE);
-	    			System.out.println(page == null); //not reaching this point?
+	    			//System.out.println(page == null); //not reaching this point?
 	    			pageit = page.iterator();
 	    			
 	    			curpage++;
@@ -151,7 +155,9 @@ public class HeapFile implements DbFile {
 	    		}
 	    		else if(! pageit.hasNext()){
 	    			pageit = null;
-	    			fetchNext();
+	    			if(curpage < numPages()){
+	    				fetchNext();
+	    			}
 	    		}
 	    		else{
 	    			next = pageit.next();
@@ -160,8 +166,8 @@ public class HeapFile implements DbFile {
     	}
     	
     	public Tuple next(){
-    		if (!hasNext()) {
-                throw new NoSuchElementException("no more.");
+    		if (!open || !hasNext()) {
+                throw new NoSuchElementException("does not have next element");
             }
             Tuple tup = next;
             next = null;                
@@ -171,18 +177,19 @@ public class HeapFile implements DbFile {
     	public void rewind(){
     		curpage = 0;
     		next = null;
+    		pageit = null;
     	}
     	
     	public void open(){
-    		//not sure what exactly this is meant for
+    		open = true;
     	}
     	
     	public void close(){
-    		//not sure what exactly this is meant for
+    		open = false;
     	}
     	
     	public void remove() {
-            throw new UnsupportedOperationException("nope.");
+            throw new UnsupportedOperationException("remove is not supported");
         }
     }
     
