@@ -278,7 +278,6 @@ public class HeapPage implements Page {
         if(! t.getTupleDesc().equals(td)){
         	throw new DbException("tupledesc does not match");
         }
-        t.setRecordId(new RecordId(this.pid, i));
         tuples[i] = t;
         markSlotUsed(i, true);
         //System.out.println(getNumEmptySlots());
@@ -335,7 +334,7 @@ public class HeapPage implements Page {
      * Abstraction to fill or clear a slot on this page.
      */
     private void markSlotUsed(int i, boolean value) {
-    	//System.out.println(isSlotUsed(i));
+    	System.out.println(isSlotUsed(i));
     	byte slot = header[i/8];
         int place = 1 << i%8;
         if(value){
@@ -345,7 +344,7 @@ public class HeapPage implements Page {
         	header[i/8] = (byte)(slot & ~place);
         }
         //System.out.println(value + " " + isSlotUsed(i));
-        //System.out.println(getNumEmptySlots());
+        System.out.println(getNumEmptySlots());
     }
 
     /**

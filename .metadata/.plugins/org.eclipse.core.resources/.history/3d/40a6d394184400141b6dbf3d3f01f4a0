@@ -113,14 +113,8 @@ public class HeapFile implements DbFile {
             TransactionAbortedException {
         RecordId rid = t.getRecordId();
         BufferPool bp = Database.getBufferPool();
-        HeapPage page = (HeapPage)bp.getPage(tid, rid.getPageId(), Permissions.READ_WRITE);
-        if(page == null){
-        	throw new DbException("could not get page from bufferpool");
-        }
-        page.deleteTuple(t);
-    	ArrayList<Page> pages = new ArrayList<Page>();
-    	pages.add(page);
-    	return pages;
+        HeapPage page = bp.getPage(tid, rid.getPageId(), perm)
+    	return null;
     }
     
     public class myIterator implements DbFileIterator{

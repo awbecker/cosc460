@@ -111,16 +111,9 @@ public class HeapFile implements DbFile {
     // see DbFile.java for javadocs
     public ArrayList<Page> deleteTuple(TransactionId tid, Tuple t) throws DbException,
             TransactionAbortedException {
-        RecordId rid = t.getRecordId();
-        BufferPool bp = Database.getBufferPool();
-        HeapPage page = (HeapPage)bp.getPage(tid, rid.getPageId(), Permissions.READ_WRITE);
-        if(page == null){
-        	throw new DbException("could not get page from bufferpool");
-        }
-        page.deleteTuple(t);
-    	ArrayList<Page> pages = new ArrayList<Page>();
-    	pages.add(page);
-    	return pages;
+        // some code goes here
+        return null;
+        // not necessary for lab1
     }
     
     public class myIterator implements DbFileIterator{
@@ -153,7 +146,7 @@ public class HeapFile implements DbFile {
 	    		if(pageit == null){
 	    			
 	    			BufferPool bp = Database.getBufferPool();
-	    			HeapPage page = (HeapPage) bp.getPage(this.tid, new HeapPageId(this.tableid, this.curpage), Permissions.READ_ONLY);
+	    			HeapPage page = (HeapPage) bp.getPage(this.tid, new HeapPageId(this.tableid, this.curpage), Permissions.READ_WRITE);
 	    			pageit = page.iterator();
 	    			curpage++;
 	    			if(pageit.hasNext()){

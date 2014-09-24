@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="HeapPageWriteTest" project="mysimpledb" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="simpledb.HeapPageWriteTest" time="0.387">
+    <testcase name="testDirty" classname="simpledb.HeapPageWriteTest" time="0.187"/>
+    <testcase name="addTuple" classname="simpledb.HeapPageWriteTest" time="0.184"/>
+    <testcase name="deleteNonexistentTuple" classname="simpledb.HeapPageWriteTest" time="0.003"/>
+    <testcase name="deleteTuple" classname="simpledb.HeapPageWriteTest" time="0.013"/>
+  </testsuite>
+</testrun>

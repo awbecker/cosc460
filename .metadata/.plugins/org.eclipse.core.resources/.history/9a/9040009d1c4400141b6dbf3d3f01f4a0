@@ -32,27 +32,26 @@ Answer the questions from the lab description here.  Questions 8 and 9 do not re
 	}
 	return list
 
-7.	while(true){
-		if t1 == null:
-			while(iterR.hasNext()){
-				t1 = iterR.next()
-				while(iterS.hasNext()){
-					t2 = iterS.next()
-					if t1 & t2 match predicate:
-						return merge(t1, t2)
-				}
-				iterS.rewind()
-			}
-			return null
-		else:
+7.	if t1 == null:
+		while(iterR.hasNext()){
+			t1 = iterR.next()
 			while(iterS.hasNext()){
 				t2 = iterS.next()
 				if t1 & t2 match predicate:
 					return merge(t1, t2)
 			}
 			iterS.rewind()
-			t1 = null
-	}
+		}
+	else:
+		while(iterS.hasNext()){
+			t2 = iterS.next()
+			if t1 & t2 match predicate:
+				return merge(t1, t2)
+		}
+		iterS.rewind()
+		t1 = null
+		join
+		return null								//did not find any elements matching the predicate
 
 After you complete lab 3, please answer the following questions.  
 
